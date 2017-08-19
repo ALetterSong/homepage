@@ -1,0 +1,10 @@
+{
+  "name": "homepage",
+  "version": "1.0.0",
+  "description": "GGG's home",
+  "author": "bigggge",
+  "license": "MIT",
+  "dependencies": {
+    "fullpage.js": "^2.9.4"
+  }
+}

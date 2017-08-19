@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>GGG's Home</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="../node_modules/fullpage.js/dist/jquery.fullpage.min.css">
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/fullpage.js/dist/jquery.fullpage.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <div class="background"></div>
+      <div class="background bg2"></div>
+      <div class="background bg3"></div>
+
+      <div id="fullpage">
+        <div class="section page1">
+          <img id="avatar" src="assets/avatar.jpg">
+          <p>Hi, I'm <strong>GGG</strong></p>
+          <p class="address">Suzhou,China</p>
+          <div>
+          <span class="link-wrapper">
+            <a class="link" href="https://blog.haoduoyu.cc" target="_blank">BLOG</a>
+          </span>
+            <span class="link-wrapper">
+            <a class="link" href="https://github.com/bigggge" target="_blank">GITHUB</a>
+          </span>
+          </div>
+        </div>
+
+        <div class="section page2">
+          <h2 class="title">About Me</h2>
+          <p>1993年 | 天秤座</p>
+          <p>喜欢各种有趣的东西 | 做自己喜欢的事</p>
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        $('#fullpage').fullpage({
+          navigation: true
+        });
+      });
+    </script>
+
+  </body>
+</html>
