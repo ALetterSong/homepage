@@ -5,6 +5,7 @@
   "author": "bigggge",
   "license": "MIT",
   "dependencies": {
-    "fullpage.js": "^2.9.4"
+    "fullpage.js": "^2.9.4",
+    "jquery": "^3.2.1"
   }
 }
