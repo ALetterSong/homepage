@@ -4,20 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <title>GGG's Home</title>
-    <link rel="stylesheet" href="src/assets/style.css">
+    <link rel="stylesheet" href="assets/style.css">
     <link rel="stylesheet" href="node_modules/fullpage.js/dist/jquery.fullpage.min.css">
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/fullpage.js/dist/jquery.fullpage.min.js"></script>
+    <script src="assets/live2d.min.js"></script>
+    <script src="assets/pixi.min.js"></script>
+    <script src="assets/pixi-live2d.js"></script>
   </head>
   <body>
-    <div>
+    <div id="main">
       <div class="background"></div>
       <div class="background bg2"></div>
       <div class="background bg3"></div>
 
       <div id="fullpage">
         <div class="section page1">
-          <img id="avatar" src="src/assets/avatar.jpg">
+          <img id="avatar" src="assets/avatar.jpg">
           <p>Hi, I'm <strong>GGG</strong></p>
           <p class="address">Suzhou,China</p>
           <div>
@@ -36,15 +39,116 @@
           <p>喜欢各种有趣的东西 | 做自己喜欢的事</p>
         </div>
       </div>
-
     </div>
 
     <script>
+
       $(document).ready(function () {
+        var loc = location.href.split(':');
+        if (loc[0] === 'http' && loc[1] === 'haoduoyu.cc') {
+          location.href = 'https:' + loc[1];
+        }
+
         $('#fullpage').fullpage({
           navigation: true
         });
-      });
+        var modelHaru = {
+          'type': 'Live2D Model Setting',
+          'name': 'haru',
+          'model': 'assets/haru/haru_01.moc',
+          'textures': [
+            'assets/haru/haru_01.1024/texture_00.png',
+            'assets/haru/haru_01.1024/texture_01.png',
+            'assets/haru/haru_01.1024/texture_02.png'
+          ],
+          'physics': 'assets/haru/haru.physics.json',
+          'pose': 'assets/haru/haru.pose.json',
+          'expressions': [
+            {'name': 'f01', 'file': 'assets/haru/expressions/f01.exp.json'},
+            {'name': 'f02', 'file': 'assets/haru/expressions/f02.exp.json'},
+            {'name': 'f03', 'file': 'assets/haru/expressions/f03.exp.json'},
+            {'name': 'f04', 'file': 'assets/haru/expressions/f04.exp.json'},
+            {'name': 'f05', 'file': 'assets/haru/expressions/f05.exp.json'},
+            {'name': 'f06', 'file': 'assets/haru/expressions/f06.exp.json'},
+            {'name': 'f07', 'file': 'assets/haru/expressions/f07.exp.json'},
+            {'name': 'f08', 'file': 'assets/haru/expressions/f08.exp.json'}
+          ],
+          'layout': {
+            'center_x': 0,
+            'y': 1.2,
+            'width': 2.9
+          },
+          'hit_areas': [
+            {'name': 'head', 'id': 'D_REF.HEAD'},
+            {'name': 'body', 'id': 'D_REF.BODY'}
+          ],
+          'motions': {
+            'idle': [
+              {'file': 'assets/haru/motions/idle_00.mtn', 'fade_in': 2000, 'fade_out': 2000},
+              {'file': 'assets/haru/motions/idle_01.mtn', 'fade_in': 2000, 'fade_out': 2000},
+              {'file': 'assets/haru/motions/idle_02.mtn', 'fade_in': 2000, 'fade_out': 2000}
+            ],
+            'tap_body': [
+              {'file': 'assets/haru/motions/tapBody_00.mtn', 'sound': 'assets/haru/sounds/tapBody_00.mp3'},
+              {'file': 'assets/haru/motions/tapBody_01.mtn', 'sound': 'assets/haru/sounds/tapBody_01.mp3'},
+              {'file': 'assets/haru/motions/tapBody_02.mtn', 'sound': 'assets/haru/sounds/tapBody_02.mp3'}
+            ],
+            'pinch_in': [
+              {'file': 'assets/haru/motions/pinchIn_00.mtn', 'sound': 'assets/haru/sounds/pinchIn_00.mp3'}
+            ],
+            'pinch_out': [
+              {'file': 'assets/haru/motions/pinchOut_00.mtn', 'sound': 'assets/haru/sounds/pinchOut_00.mp3'}
+            ],
+            'shake': [
+              {'file': 'assets/haru/motions/shake_00.mtn', 'sound': 'assets/haru/sounds/shake_00.mp3', 'fade_in': 500}
+            ],
+            'flick_head': [
+              {'file': 'assets/haru/motions/flickHead_00.mtn', 'sound': 'assets/haru/sounds/flickHead_00.mp3'}
+            ]
+          }
+        };
+        var renderer = new PIXI.autoDetectRenderer(300, 200,{transparent: true});
+        renderer.view.classList.add('live2d');
+        document.getElementById('main').appendChild(renderer.view);
+        var stage = new PIXI.Container();
+
+//        var sprite = new PIXI.Sprite.fromImage('./assets/7_room2_a.jpg');
+//        stage.addChild(sprite);
+
+        var live2dSprite = new PIXI.Live2DSprite(modelHaru, {
+          debugLog: false,
+          randomMotion: true,
+          eyeBlink: true
+        });
+        stage.addChild(live2dSprite);
+
+        live2dSprite.adjustScale(0, 0, 1);
+        live2dSprite.adjustTranslate(0, 0);
+        live2dSprite.startRandomMotion('idle');
+
+        live2dSprite.on('click', function (evt) {
+          var point = evt.data.global;
+          if (live2dSprite.hitTest('body', point.x, point.y)) {
+            live2dSprite.startRandomMotionOnce('tap_body');
+          }
+          if (live2dSprite.hitTest('head', point.x, point.y)) {
+            live2dSprite.playSound('星のカケラ.mp3', 'assets/sound/');
+          }
+        });
+        live2dSprite.on('mousemove', function (evt) {
+          var point = evt.data.global;
+          live2dSprite.setViewPoint(point.x, point.y);
+        });
+
+        function animate () {
+          requestAnimationFrame(animate);
+          renderer.render(stage);
+        }
+
+        animate();
+
+      })
+      ;
     </script>
 
   </body>
