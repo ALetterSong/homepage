@@ -24,12 +24,15 @@
           <p>Hi, I'm <strong>GGG</strong></p>
           <p class="address">Suzhou,China</p>
           <div>
-          <span class="link-wrapper">
-            <a class="link" href="https://blog.haoduoyu.cc" target="_blank">BLOG</a>
-          </span>
             <span class="link-wrapper">
-            <a class="link" href="https://github.com/bigggge" target="_blank">GITHUB</a>
-          </span>
+              <a class="link" href="https://blog.haoduoyu.cc" target="_blank">BLOG</a>
+            </span>
+            <span class="link-wrapper">
+              <a class="link" href="https://github.com/ALetterSong/Note/issues" target="_blank">NOTE</a>
+            </span>
+            <span class="link-wrapper">
+              <a class="link" href="https://github.com/bigggge" target="_blank">GITHUB</a>
+            </span>
           </div>
         </div>
 
@@ -49,8 +52,10 @@
         });
 
         var loc = location.href.split(':');
-        if (loc[0] === 'http' && loc[1].indexOf('haoduoyu.cc') >= 0) {
-          location.href = 'https:' + loc[1];
+        if (loc[1].indexOf('haoduoyu.cc') >= 0 && loc[1].indexOf('www') == 0) {
+          if (loc[0] === 'http') {
+            location.href = 'https:' + loc[1];
+          }
         } else {
           var modelHaru = {
             'type': 'Live2D Model Setting',
