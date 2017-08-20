@@ -52,11 +52,7 @@
         });
 
         var loc = location.href.split(':');
-        if (loc[1].indexOf('haoduoyu.cc') >= 0 && loc[1].indexOf('www') < 0) {
-          if (loc[0] === 'http') {
-            location.href = 'https:' + loc[1];
-          }
-        } else {
+        if (loc[1].indexOf('www.haoduoyu.cc') >= 0) {
           var modelHaru = {
             'type': 'Live2D Model Setting',
             'name': 'haru',
