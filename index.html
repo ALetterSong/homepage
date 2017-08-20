@@ -52,7 +52,7 @@
         });
 
         var loc = location.href.split(':');
-        if (loc[1].indexOf('haoduoyu.cc') >= 0 && loc[1].indexOf('www') == 0) {
+        if (loc[1].indexOf('haoduoyu.cc') >= 0 && loc[1].indexOf('www') < 0) {
           if (loc[0] === 'http') {
             location.href = 'https:' + loc[1];
           }
