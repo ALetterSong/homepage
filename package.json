@@ -3,9 +3,5 @@
   "version": "1.0.0",
   "description": "GGG's home",
   "author": "bigggge",
-  "license": "MIT",
-  "dependencies": {
-    "fullpage.js": "^2.9.4",
-    "jquery": "^3.2.1"
-  }
+  "license": "MIT"
 }
